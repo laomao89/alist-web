@@ -12,6 +12,8 @@ import {
   BsWindows,
   BsFileEarmarkZipFill,
   BsMarkdownFill,
+  BsFiletypeYml,
+  BsFiletypeXml,
 } from "solid-icons/bs"
 import {
   FaSolidDatabase,
@@ -19,6 +21,18 @@ import {
   FaSolidCompactDisc,
   FaSolidLink,
 } from "solid-icons/fa"
+import {
+  SiAdobephotoshop,
+  SiAdobepremierepro,
+  SiAdobeillustrator,
+  SiAdobeaftereffects,
+  SiAdobeaudition,
+  SiAdobeindesign,
+  SiTypescript,
+  SiGnubash,
+  SiJavascript,
+  SiPhp,
+} from "solid-icons/si"
 import { IoFolder } from "solid-icons/io"
 import { ImAndroid } from "solid-icons/im"
 import { Obj, ObjType } from "~/types"
@@ -27,6 +41,12 @@ import {
   VscodeIconsFileTypeAi2,
   VscodeIconsFileTypePhotoshop2,
 } from "~/components"
+import { FaBrandsGolang, FaBrandsJava, FaBrandsPython } from "solid-icons/fa"
+import {
+  BiSolidFileJson,
+  BiSolidFileCss,
+  BiSolidFileHtml,
+} from "solid-icons/bi"
 import { SiAsciinema } from "solid-icons/si"
 
 const iconMap = {
@@ -47,6 +67,26 @@ const iconMap = {
   ai: VscodeIconsFileTypeAi2,
   url: FaSolidLink,
   cast: SiAsciinema,
+  // Adobe
+  "psd,pdd": SiAdobephotoshop,
+  prproj: SiAdobepremierepro,
+  "ai,ait,eps,epsf,ps": SiAdobeillustrator,
+  aep: SiAdobeaftereffects,
+  sesx: SiAdobeaudition,
+  indd: SiAdobeindesign,
+  // code
+  go: FaBrandsGolang,
+  java: FaBrandsJava,
+  pnp: SiPhp,
+  "py,pyc,pyo,pyi,pyw,pyd,pyx": FaBrandsPython,
+  "ts,tsx": SiTypescript,
+  "yaml,yml,toml": BsFiletypeYml,
+  xml: BsFiletypeXml,
+  sh: SiGnubash,
+  json: BiSolidFileJson,
+  "js,mjs,cjs": SiJavascript,
+  css: BiSolidFileCss,
+  html: BiSolidFileHtml,
 }
 
 export const getIconByTypeAndExt = (type: number, ext: string) => {

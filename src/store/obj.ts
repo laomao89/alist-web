@@ -178,8 +178,8 @@ export const isIndeterminate = () => {
 }
 
 export type LayoutType = "list" | "grid" | "image"
-const [pathname, setPathname] = createSignal<string>(location.pathname)
-const layoutRecord: Record<string, LayoutType> = (() => {
+export const [pathname, setPathname] = createSignal<string>(location.pathname)
+export const layoutRecord: Record<string, LayoutType> = (() => {
   try {
     return JSON.parse(localStorage.getItem("layoutRecord") || "{}")
   } catch (e) {
@@ -188,12 +188,14 @@ const layoutRecord: Record<string, LayoutType> = (() => {
 })()
 
 bus.on("pathname", (p) => setPathname(p))
-const [_layout, _setLayout] = createSignal<LayoutType>(
+export const [_layout, _setLayout] = createSignal<LayoutType>(
   layoutRecord[pathname()] || local["global_default_layout"],
 )
 export const layout = () => {
-  const layout = layoutRecord[pathname()]
-  _setLayout(layout || local["global_default_layout"])
+  // const layout = layoutRecord[pathname()]
+  // _setLayout(layout || local["global_default_layout"])
+  const currentLayout = layoutRecord[pathname()] || "grid"
+  _setLayout(currentLayout)
   return _layout()
 }
 export const setLayout = (layout: LayoutType) => {

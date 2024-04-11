@@ -9,7 +9,7 @@ export const Footer = () => {
   const t = useT()
   return (
     <VStack class="footer" w="$full" py="$4">
-      <HStack spacing="$1">
+      {/* <HStack spacing="$1">
         <Anchor href="https://github.com/Xhofe/alist" external>
           {t("home.footer.powered_by")}
         </Anchor>
@@ -20,7 +20,7 @@ export const Footer = () => {
         >
           {t(UserMethods.is_guest(me()) ? "login.login" : "home.footer.manage")}
         </AnchorWithBase>
-      </HStack>
+      </HStack> */}
     </VStack>
   )
 }

@@ -12,15 +12,31 @@ import { Switch, Match, For } from "solid-js"
 import { Dynamic } from "solid-js/web"
 import { useT } from "~/hooks"
 import { getMainColor, LayoutType, layout, setLayout } from "~/store"
+import { createSignal } from "solid-js"
 
 const layouts = {
-  list: FaSolidListUl,
   grid: BsGridFill,
+  list: FaSolidListUl,
   image: BsCardImage,
 } as const
 
 export const Layout = () => {
   const t = useT()
+  // const [currentLayout, setCurrentLayout] = createSignal("list")
+  // const toggleLayout = () => {
+  //   setCurrentLayout((prevLayout) => {
+  //     if (prevLayout === "list") {
+  //       return 'grid'
+  //     }
+  //     else if (prevLayout === "grid") {
+  //       return 'image'
+  //     }
+  //     else {
+  //       return 'list'
+  //     }
+  //   })
+  // }
+
   return (
     <Menu>
       <MenuTrigger
@@ -35,15 +51,16 @@ export const Layout = () => {
         size="lg"
         icon={
           <Switch>
-            <Match when={layout() === "list"}>
-              <FaSolidListUl />
-            </Match>
             <Match when={layout() === "grid"}>
               <BsGridFill />
+            </Match>
+            <Match when={layout() === "list"}>
+              <FaSolidListUl />
             </Match>
             <Match when={layout() === "image"}>
               <BsCardImage />
             </Match>
+            <BsGridFill />
           </Switch>
         }
       ></MenuTrigger>

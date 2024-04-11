@@ -53,6 +53,7 @@ const Password = () => {
           >
             {t("global.go_login")}
           </Text>
+          {/* <Text>{t('不公开去登录密码再进入')}</Text> */}
         </Flex>
         <HStack spacing="$2">
           <Button colorScheme="neutral" onClick={back}>

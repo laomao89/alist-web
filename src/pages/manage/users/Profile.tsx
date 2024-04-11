@@ -144,11 +144,18 @@ const Profile = () => {
               }}
             >
               <AlertIcon mr="$2_5" />
-              <AlertTitle mr="$2_5">{t("users.guest-tips")}</AlertTitle>
-              <AlertDescription>{t("users.modify_nothing")}</AlertDescription>
+              <Text>{t("此页面不公开")}</Text>
+              <Text>{t("点左侧回到主页")}</Text>
+              {/* <AlertTitle mr="$2_5">{t("users.guest-tips")}</AlertTitle>
+              <AlertDescription>{t("users.modify_nothing")}</AlertDescription> */}
             </Alert>
             <HStack spacing="$2">
-              <Text>{t("global.have_account")}</Text>
+              <img
+                src="https://bj.vipgj555.cn/file/fe0539b2a362b9449946c.png"
+                width="50%"
+                height="50%"
+              ></img>
+              {/* <Text>{t("global.have_account")}</Text>
               <Text
                 color="$info9"
                 as={LinkWithBase}
@@ -157,7 +164,7 @@ const Profile = () => {
                 )}`}
               >
                 {t("global.go_login")}
-              </Text>
+              </Text> */}
             </HStack>
           </>
         }
@@ -302,7 +309,7 @@ const Profile = () => {
           {t("users.add_webauthn")}
         </Button>
       </Show>
-      <HStack wrap="wrap" gap="$2" mt="$2">
+      {/* <HStack wrap="wrap" gap="$2" mt="$2">
         <For each={UserPermissions}>
           {(item, i) => (
             <PermissionBadge can={UserMethods.can(me(), i())}>
@@ -310,7 +317,7 @@ const Profile = () => {
             </PermissionBadge>
           )}
         </For>
-      </HStack>
+      </HStack> */}
     </VStack>
   )
 }

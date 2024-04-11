@@ -1,4 +1,10 @@
-import { Box, createDisclosure, VStack } from "@hope-ui/solid"
+import {
+  Box,
+  createDisclosure,
+  useColorMode,
+  useColorModeValue,
+  VStack,
+} from "@hope-ui/solid"
 import { createMemo, Show } from "solid-js"
 import { RightIcon } from "./Icon"
 import { CgMoreO } from "solid-icons/cg"
@@ -13,6 +19,8 @@ import { usePath } from "~/hooks"
 import { Motion } from "@motionone/solid"
 import { isTocVisible, setTocDisabled } from "~/components"
 import { BiSolidBookContent } from "solid-icons/bi"
+import { FiSun as Sun } from "solid-icons/fi"
+import { FiMoon as Moon } from "solid-icons/fi"
 
 export const Right = () => {
   const { isOpen, onToggle } = createDisclosure({
@@ -23,6 +31,19 @@ export const Right = () => {
   const margin = createMemo(() => (isOpen() ? "$4" : "$5"))
   const isFolder = createMemo(() => objStore.state === State.Folder)
   const { refresh } = usePath()
+  const { toggleColorMode } = useColorMode()
+  const icon = useColorModeValue(
+    {
+      size: "$8",
+      component: Moon,
+      p: "$0.5",
+    },
+    {
+      size: "$8",
+      component: Sun,
+      p: "$0.5",
+    },
+  )
   return (
     <Box
       class="left-toolbar-box"
@@ -30,6 +51,45 @@ export const Right = () => {
       right={margin()}
       bottom={margin()}
     >
+      {/* <Show
+        when={isOpen()}
+        fallback={
+          <RightIcon
+            class="toolbar-toggle"
+            as={CgMoreO}
+            onClick={() => {
+              onToggle()
+            }}
+          />
+        }
+      >
+      </Show> */}
+      {/* 刷新按钮移动出来 */}
+      <VStack spacing="$1" class="left-toolbar-in">
+        <Show when={isFolder() && (userCan("write") || objStore.write)}>
+          <RightIcon
+            as={RiSystemRefreshLine}
+            tips="refresh"
+            onClick={() => {
+              refresh(undefined, true)
+            }}
+          />
+        </Show>
+      </VStack>
+      {/* 夜间白天模式切换 */}
+      <Show
+        when={isOpen()}
+        fallback={
+          <RightIcon
+            // 图标已更换
+            as={icon().component}
+            // tips="白天夜间模式切换"
+            onClick={toggleColorMode}
+          />
+        }
+      >
+        {isOpen() ? <div></div> : null}
+      </Show>
       <Show
         when={isOpen()}
         fallback={
@@ -60,13 +120,13 @@ export const Right = () => {
           <VStack spacing="$1" class="left-toolbar-in">
             <Show when={isFolder() && (userCan("write") || objStore.write)}>
               {/* <Add /> */}
-              <RightIcon
+              {/* <RightIcon
                 as={RiSystemRefreshLine}
                 tips="refresh"
                 onClick={() => {
                   refresh(undefined, true)
                 }}
-              />
+              /> */}
               <RightIcon
                 as={operations.new_file.icon}
                 tips="new_file"

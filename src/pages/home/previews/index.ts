@@ -83,6 +83,11 @@ const previews: Preview[] = [
     exts: ["cast"],
     component: lazy(() => import("./asciinema")),
   },
+  {
+    name: "Ipa",
+    exts: ["ipa", "tipa"],
+    component: lazy(() => import("./ipa")),
+  },
 ]
 
 export const getPreviews = (

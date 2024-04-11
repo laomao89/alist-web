@@ -5,37 +5,37 @@ import {
   Center,
   Icon,
   Kbd,
-  CenterProps,
+  IconButton,
 } from "@hope-ui/solid"
-import { Show, createMemo } from "solid-js"
-import { getSetting, local, objStore, State } from "~/store"
-import { BsSearch } from "solid-icons/bs"
+import { Show, Switch, Match } from "solid-js"
+import { CgImage } from "solid-icons/cg"
+import { getMainColor, getSetting, layout, objStore, State } from "~/store"
 import { CenterLoading } from "~/components"
 import { Container } from "../Container"
 import { bus } from "~/utils"
 import { Layout } from "./layout"
-import { isMac } from "~/utils/compatibility"
+import { AiOutlineFileSearch } from "solid-icons/ai"
+import { TbListSearch } from "solid-icons/tb"
+import { createSignal } from "solid-js"
 
 export const Header = () => {
   const logos = getSetting("logo").split("\n")
   const logo = useColorModeValue(logos[0], logos.pop())
-
-  const stickyProps = createMemo<CenterProps>(() => {
-    switch (local["position_of_header_navbar"]) {
-      case "sticky":
-        return { position: "sticky", zIndex: "$sticky", top: 0 }
-      default:
-        return { position: undefined, zIndex: undefined, top: undefined }
-    }
-  })
+  const [showSearchBox, setShowSearchBox] = createSignal(false)
+  const toggleSearchBox = () => {
+    setShowSearchBox((prev) => {
+      const newState = !prev
+      if (newState) {
+        bus.emit("tool", "search")
+      }
+      return newState
+    })
+  }
 
   return (
     <Center
-      {...stickyProps}
-      bgColor="$background"
       class="header"
-      w="$full"
-      // shadow="$md"
+      w="$full" // shadow="$md"
     >
       <Container>
         <HStack
@@ -54,12 +54,50 @@ export const Header = () => {
           </HStack>
           <HStack class="header-right" spacing="$2">
             <Show when={objStore.state === State.Folder}>
-              <Show when={getSetting("search_index") !== "none"}>
+              <IconButton
+                aria-label="Search"
+                compact
+                size="lg"
+                // // 自带的搜索原本只能显示两个图标下面的换成了三个
+                // icon={
+                //   <Show when={layout() === "list"} fallback={<TbListSearch />}>
+                //     <AiOutlineFileSearch />
+                //   </Show>
+                // }
+                //这次支持三个不同的图标了
+                icon={
+                  <Switch>
+                    <Match when={layout() === "grid"}>
+                      <TbListSearch />
+                    </Match>
+                    <Match when={layout() === "list"}>
+                      <TbListSearch />
+                    </Match>
+                    <Match when={layout() === "image"}>
+                      <TbListSearch />
+                    </Match>
+                    {/* <Match when={layout() === "grid"}>
+                      <AiOutlineFileSearch />
+                    </Match>
+                    <Match when={layout() === "image"}>
+                      <CgImage />
+                    </Match> */}
+                  </Switch>
+                }
+                onClick={toggleSearchBox}
+              />
+              {/* <Show when={showSearchBox()}>
                 <HStack
+                  aria-label="Search"
+                  // 背景色
                   bg="$neutral4"
+                  // 长度
                   w="$32"
+                  // 方框
                   p="$2"
+                  // 圆角
                   rounded="$md"
+                  color={getMainColor()}
                   justifyContent="space-between"
                   border="2px solid transparent"
                   cursor="pointer"
@@ -70,13 +108,14 @@ export const Header = () => {
                     bus.emit("tool", "search")
                   }}
                 >
-                  <Icon as={BsSearch} />
                   <HStack>
-                    {isMac ? <Kbd>Cmd</Kbd> : <Kbd>Ctrl</Kbd>}
+                    <Kbd>Ctrl</Kbd>
                     <Kbd>K</Kbd>
                   </HStack>
+                  <Icon as= {TbListSearch} />
                 </HStack>
-              </Show>
+              </Show> */}
+              {/* 搜索右侧的那个变换的按钮 */}
               <Layout />
             </Show>
           </HStack>
